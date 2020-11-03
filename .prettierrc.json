@@ -1,1 +1,9 @@
-{}
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "trailingComma": "es5",
+  "quoteProps": "preserve",
+  "singleQuote": true,
+  "endOfLine": "auto"
+}
