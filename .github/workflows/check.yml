@@ -1,0 +1,68 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+
+  prettier-check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+        #node-version: [12.x, 14.x]
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install Modules
+      run: yarn
+    - name: Check Prettier
+      id: prettier
+      run: yarn prettier-check
+
+  eslint-check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+        #node-version: [12.x, 14.x]
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install Modules
+      run: yarn
+    - name: Check Prettier
+      id: prettier
+      run: yarn prettier-check
+      continue-on-error: true
+    - name: Run ESLint
+      id: eslint
+      run: yarn eslint
+
+  build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install Modules
+      run: yarn
+    - name: Build
+      run: yarn run build --if-present
+    - name: Run Tests
+      run: yarn test
+      env:
+        CI: true
