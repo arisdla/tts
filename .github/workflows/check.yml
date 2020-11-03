@@ -60,7 +60,7 @@ jobs:
       - name: Install Modules
         run: yarn
       - name: Build
-        run: yarn run build --if-present
+        run: yarn build --if-present
       - name: Run Tests
         run: yarn test
         env:
